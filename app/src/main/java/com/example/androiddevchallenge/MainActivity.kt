@@ -18,11 +18,27 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.androiddevchallenge.model.Dog
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp("HyunWoo")
+                MyApp()
             }
         }
     }
@@ -38,10 +54,10 @@ class MainActivity : AppCompatActivity() {
 
 // Start building your app here!
 @Composable
-fun MyApp(name: String) {
+fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
         // Text(text = "Ready... Set... GO!")
-        Greeting(name)
+        Greeting()
     }
 }
 
@@ -49,7 +65,7 @@ fun MyApp(name: String) {
 @Composable
 fun LightPreview() {
     MyTheme {
-        MyApp("MeMe")
+        MyApp()
     }
 }
 
@@ -57,11 +73,35 @@ fun LightPreview() {
 @Composable
 fun DarkPreview() {
     MyTheme(darkTheme = true) {
-        MyApp("NooNoo")
+        MyApp()
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text (text = "Hello $name!")
+fun Greeting() {
+    DogCard(dog = Dog("Bark", "Huskey", R.drawable.ic_huskey))
+}
+
+@Composable
+fun DogCard(dog: Dog) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { }
+    ) {
+        Image(
+            painter = painterResource(id = dog.image),
+            contentDescription = "dog",
+            modifier = Modifier
+                .height(80.dp)
+                .width(80.dp),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Column {
+            Text(dog.name, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(dog.kind, fontSize = 12.sp)
+        }
+    }
 }
