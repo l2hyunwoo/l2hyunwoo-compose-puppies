@@ -20,12 +20,16 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -79,7 +83,17 @@ fun DarkPreview() {
 
 @Composable
 fun Greeting() {
-    DogCard(dog = Dog("Bark", "Huskey", R.drawable.ic_huskey))
+    DogColumn(initDogList())
+}
+
+@Composable
+fun DogColumn(dogs: List<Dog>) {
+    LazyColumn(
+        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        items(dogs) { DogCard(it) }
+    }
 }
 
 @Composable
@@ -98,10 +112,38 @@ fun DogCard(dog: Dog) {
                 .width(80.dp),
             contentScale = ContentScale.Crop
         )
-        Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.width(16.dp))
         Column {
             Text(dog.name, fontSize = 20.sp, fontWeight = FontWeight.Bold)
             Text(dog.kind, fontSize = 12.sp)
         }
     }
 }
+
+private fun initDogList() = listOf(
+    Dog(
+        name = "Gizmo",
+        kind = "Siberian Husky",
+        image = R.drawable.ic_siberian_husky
+    ),
+    Dog(
+        name = "Rex",
+        kind = "Husky",
+        image = R.drawable.ic_husky
+    ),
+    Dog(
+        name = "Hank",
+        kind = "Poodle",
+        image = R.drawable.ic_poodle
+    ),
+    Dog(
+        name = "Gus",
+        kind = "Welsh Corgi",
+        image = R.drawable.ic_welsh_corgi
+    ),
+    Dog(
+        name = "Rocco",
+        kind = "Sheperd",
+        image = R.drawable.ic_shepherd
+    )
+)
