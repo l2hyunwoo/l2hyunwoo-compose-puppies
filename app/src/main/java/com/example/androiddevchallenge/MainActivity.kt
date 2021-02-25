@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp()
+                MyApp("HyunWoo")
             }
         }
     }
@@ -38,9 +38,10 @@ class MainActivity : AppCompatActivity() {
 
 // Start building your app here!
 @Composable
-fun MyApp() {
+fun MyApp(name: String) {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        // Text(text = "Ready... Set... GO!")
+        Greeting(name)
     }
 }
 
@@ -48,7 +49,7 @@ fun MyApp() {
 @Composable
 fun LightPreview() {
     MyTheme {
-        MyApp()
+        MyApp("MeMe")
     }
 }
 
@@ -56,6 +57,11 @@ fun LightPreview() {
 @Composable
 fun DarkPreview() {
     MyTheme(darkTheme = true) {
-        MyApp()
+        MyApp("NooNoo")
     }
+}
+
+@Composable
+fun Greeting(name: String) {
+    Text (text = "Hello $name!")
 }
